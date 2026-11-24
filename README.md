@@ -4,13 +4,39 @@ A pstack-based workflow kit for Codex, Antigravity, and Cursor. Five playbooks c
 
 ## Install
 
-With Node.js and npm available, run this from the project where you want to use it:
+### Codex desktop
 
-```sh
-npx skills add Waaaaatrix/Watrix_poteto --skill watrix-poteto -a codex -a antigravity -a cursor
+In a local Codex chat, select `$skill-installer` and send this prompt:
+
+```text
+$skill-installer Install the skills/watrix-poteto directory from https://github.com/Waaaaatrix/Watrix_poteto
 ```
 
-Keep the `-a` values for your hosts. Add `-g` for user-wide installation. Start a new chat after installing. The [skills CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add) installs the same bundle on all three hosts.
+After installation, open a new chat and select `watrix-poteto` from the skill picker. [Codex skill installer](https://learn.chatgpt.com/docs/build-skills#install-curated-skills-for-local-use)
+
+### Antigravity desktop
+
+Open the app's integrated terminal and run:
+
+```sh
+npx skills add Waaaaatrix/Watrix_poteto --skill watrix-poteto -a antigravity -g
+```
+
+Open a new conversation and type `/watrix-poteto`. [Antigravity skills](https://antigravity.google/docs/skills#invoking-skills-in-the-antigravity-app)
+
+### Cursor desktop
+
+Open the integrated terminal in Cursor and run:
+
+```sh
+npx skills add Waaaaatrix/Watrix_poteto --skill watrix-poteto -a cursor -g
+```
+
+In a new Agent chat, select `watrix-poteto` from the `/` menu. [Cursor skills](https://cursor.com/docs/skills)
+
+The terminal commands require Node.js and npm. For a project-only install, run the command from the project root without `-g`. [Skills CLI options](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#skills-add)
+
+**Without a terminal:** On GitHub, choose **Code > Download ZIP** and extract it. Use your file manager to put the entire `skills/watrix-poteto` folder under `~/.gemini/config/skills/` for Antigravity or `~/.cursor/skills/` for Cursor. For one project shared by all three apps, put it under the project's `.agents/skills/` instead.
 
 ## Use
 
