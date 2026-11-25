@@ -19,7 +19,7 @@ Write pstack's model settings, one model per role:
 
 Enumerate the model slugs you can pass to a subagent in this session (Cursor `Task`, Claude Code `Agent`, OpenCode `task`, Codex `spawn_agent`). That is the dependable source. If your harness also has a command that lists the user's models, prefer it for completeness (for example `opencode models` or `pi --list-models`). If you cannot detect any, ask the user to paste the slugs they have access to. Never write a real slug you have not confirmed is available. The aliases `inherit-parent` and `auto` are always valid even though they are not detected slugs.
 
-Resolve the [GPT-6.2 code preset](../poteto-mode/skill.md#subagents) against the detected model ID and provider options. For this preset, the `large`, `medium`, and `small` budgets select `gpt-6.2-xhigh-fast`, `gpt-6.2-high-fast`, and `gpt-6.2-medium-fast` respectively. Validate the mapped values instead of looking for preset names in the native slug list.
+Resolve the [model presets](../poteto-mode/skill.md#subagents) against the detected IDs and provider options. For GPT-6.2 Sol, `large`, `medium`, and `small` select `gpt-6.2-sol-xhigh-fast`, `gpt-6.2-sol-high-fast`, and `gpt-6.2-sol-medium-fast`. Validate the mapped values against the catalog.
 
 ### 2. Load current state
 
@@ -45,7 +45,7 @@ Every other value is the user's choice and stays, including an old slug in any o
 
 **(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by family, list, or alias (`inherit-parent`, `auto`). Families are the ones Phase A of the **arena** skill defines, so Fable is its own family. Each role has a target effort, which is its default's effort moved by the budget. `large` keeps it, `medium` lowers it one step, and `small` lowers it two steps, on the ladder `xhigh` > `high` > `medium` > `low`. No role runs above `xhigh`, and a target at the bottom of the ladder stays there. Most defaults are at `xhigh`, and each budget label names where those land. Set the effort token of every real slug in the role, panel entries included, to the role's target. The effort token is the last token, or the one before a trailing `fast`. If the result is not a detected slug, use the same family's detected slug with the highest effort at or below the target, else mark the role as needing a choice. `inherit-parent` and `auto` do not change. So `medium` turns `claude-opus-5-5-xhigh-fast` into `claude-opus-5-5-high-fast` and `claude-opus-5-5-high-fast` into `claude-opus-5-5-medium-fast`, and `small` turns them into `claude-opus-5-5-medium-fast` and `claude-opus-5-5-low-fast`. Opus 5.5 always runs its `-fast` slug, so every Opus 5.5 value ends in `-fast`. Fable 5.2 and Gemini have no fast slug, so never write one. Gemini 4 Neon slugs run from `low` to `xhigh` with no `max` or `fast` slug, so its seat runs at `gemini-4-neon-xhigh`, its top slug. A Gemini 4 Neon entry in a panel role takes its own target, `xhigh` moved by the budget, so `large` keeps `gemini-4-neon-xhigh`, `medium` writes `gemini-4-neon-high`, and `small` writes `gemini-4-neon-medium`.
 
-**(c) Show the roles and confirm.** Show every role with its model, marking any real slug not in the detected set as needing a choice. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering the detected models at `xhigh` or below plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model, which is how Auto users stay on Auto) as the options. Prefer your structured-question tool over free text. For panel roles (arena runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only values from a vendor other than the parent's, in list order, so order it by preference. Fable and the other Claude models are one vendor. An `inherit-parent` or `auto` value never judges. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+**(c) Show the roles and confirm.** Show each role, its models, and any legacy entries replaced. Mark unavailable models and ask for a choice when no configured candidate is available. For coding roles, retain the order of the available alternatives and launch only one. For `arena runners` and `interrogate reviewers`, each list entry is a seat, including repeated models and `auto` or `inherit-parent` entries. The `arena cross-judge pool` is an ordered list for one independent judge; apply Arena's vendor rule. The `swarm workers` line applies to swarm and verification unless a race assigns models per arm.
 
 ### 4. Validate
 
@@ -64,15 +64,15 @@ alwaysApply: true
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit the subagent `model` and spawn a general-purpose subagent). Alias entries in a panel list still count toward its fan-out.
 # defaults: 3
 # budget: large (xhigh)
-feature, refactoring: gpt-6.2-xhigh-fast
-bug-fix: gpt-6.2-xhigh-fast
-perf-issue: gpt-6.2-xhigh-fast
-hillclimb: gpt-6.2-xhigh-fast
-judgment and prose: claude-opus-5-5-xhigh-fast
-arena runners: claude-fable-5-2-high, claude-opus-5-5-high-fast, gemini-4-neon-xhigh
-arena cross-judge pool: claude-opus-5-5-high-fast, gemini-4-neon-xhigh
-swarm workers: claude-opus-5-5-high-fast
-interrogate reviewers: claude-fable-5-2-high, claude-opus-5-5-high-fast, gemini-4-neon-xhigh
+feature, refactoring: claude-opus-5-5-xhigh-fast, gpt-6.2-sol-xhigh-fast
+bug-fix: claude-opus-5-5-xhigh-fast, gpt-6.2-sol-xhigh-fast
+perf-issue: claude-opus-5-5-xhigh-fast, gpt-6.2-sol-xhigh-fast
+hillclimb: claude-opus-5-5-xhigh-fast, gpt-6.2-sol-xhigh-fast
+judgment and prose: gemini-4-neon-xhigh
+arena runners: gemini-4-neon-xhigh, gemini-4-neon-xhigh, gemini-4-neon-xhigh
+arena cross-judge pool: gpt-6.2-sol-xhigh-fast
+swarm workers: gpt-6.2-sol-xhigh-fast
+interrogate reviewers: gemini-4-neon-xhigh, gemini-4-neon-xhigh, gemini-4-neon-xhigh
 ```
 
 ### 6. Confirm

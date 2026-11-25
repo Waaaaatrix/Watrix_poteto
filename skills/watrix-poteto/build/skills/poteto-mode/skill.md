@@ -88,16 +88,17 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **Defaults for every `Task` call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers not inlined context, and an explicit model per role, Project workers included. `/setup-pstack` writes the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.claude/rules/pstack-models.md` in Claude Code, `~/.agents/pstack-models.md` in other harnesses), whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `model` and spawn a general-purpose subagent (`generalPurpose` in Cursor), because `poteto-agent` defaults to Opus 5.5. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, and trivial mechanical edits read `swarm workers`. If the settings file has no `# defaults: 3` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-pstack`.
 
-- Code: `gpt-6.2-xhigh-fast`.
-- Prose and judgment: `claude-opus-5-5-xhigh-fast`.
-- Trivial mechanical edits: `claude-opus-5-5-high-fast`.
-- Diverse review and design panels: one runner each on `claude-fable-5-2-high`, `claude-opus-5-5-high-fast`, and `gemini-4-neon-xhigh`.
+- Code: `claude-opus-5-5-xhigh-fast` first, then `gpt-6.2-sol-xhigh-fast` if unavailable.
+- Prose and judgment: `gemini-4-neon-xhigh`.
+- Trivial mechanical edits, swarm workers, and verification: `gpt-6.2-sol-xhigh-fast`.
+- Arena runners and Interrogate reviewers: three independent seats on `gemini-4-neon-xhigh`.
+- Arena cross-judge: `gpt-6.2-sol-xhigh-fast`.
 
-**GPT-6.2 code preset.** On Codex, `gpt-6.2-xhigh-fast` maps to model `gpt-6.2-sol`, reasoning effort `xhigh`, and service tier `priority`. The `high` and `medium` variants change only the reasoning effort. Pass the model ID and options separately. On other harnesses, report the preset as unavailable and ask for a supported choice if that model and those options cannot be selected.
+**Model presets.** On Codex, `gpt-6.2-sol-xhigh-fast` maps to `gpt-6.2-sol`, reasoning effort `xhigh`, and service tier `priority`. The `high` and `medium` variants change only the effort. Accept `gpt-6.2-xhigh-fast` as the previous spelling of this preset. When a launcher takes separate fields, resolve `gemini-4-neon-xhigh` to `gemini-4-neon` with `xhigh` effort and `claude-opus-5-5-xhigh-fast` to `claude-opus-5-5` with `xhigh` effort and Fast mode. Use the available model IDs and options.
 
 **Fable 5.2 is an exception.** It runs outside a panel only when the user named it for this task or two Opus 5.5 xhigh runs of the same brief failed its check. Say which. Difficulty alone never qualifies.
 
-**Match the model to the job.** Start from the role's line or default, keep its family, and set the level the job needs. The `/setup-pstack` budget sets each role's starting level. Panel seats keep their listed level. Raise any other role one step, up to xhigh, for the hardest or subtlest work, lower it one step for judgment, and two or more steps for routine work. No role runs above xhigh. Opus 5.5 always runs its `-fast` slug. Verification always runs on the `swarm workers` model, `claude-opus-5-5-high-fast` by default. A Gemini seat runs at `gemini-4-neon-xhigh` unless its line names another level. If your subagent tool rejects a slug, never pass it again. Fall back to the role's line or default, then the calling skill's fallback, then the closest valid slug of the same family, then omit `model`. Say so.
+**Match the model to the job.** Use the role's default or the user's configured model and reasoning budget. A comma-separated code role is an ordered list of alternatives for one subagent. If the first model is unavailable or rejects the launch, report it and try the next configured model. Do not switch models because of a completed result. If no configured alternative is available, report the blocker and ask for a supported choice.
 
 You own every subagent's work. Review the diff and write your own summary. A second opinion is the same prompt on another vendor's model.
 
