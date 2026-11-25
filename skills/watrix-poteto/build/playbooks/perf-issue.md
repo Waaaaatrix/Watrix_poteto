@@ -32,7 +32,7 @@
 
    When an earlier mantra meets the target, stop.
    <!-- 中文：有较早的策略达到目标，就停止。 -->
-3. Plan the fix from the trace. If it crosses a function boundary, `architect` first. Delegate implementation to a subagent using your configured perf-issue model (default `claude-opus-5-5-xhigh-fast`). Pick each subagent's reasoning level for the job, per the Subagents section. Review the diff. Capture a post-fix trace.
+3. Plan the fix from the trace. If it crosses a function boundary, `architect` first. Delegate implementation to a subagent using your configured perf-issue model (see the [code default](../skills/poteto-mode/skill.md#subagents)). Pick each subagent's reasoning level for the job, per the Subagents section. Review the diff. Capture a post-fix trace.
    <!-- 中文：根据 trace 制定修复方案。 -->
    <!-- 中文：跨函数边界时，先用 architect。 -->
    <!-- 中文：用配置的 perf-issue 模型把实现委派给子 Agent，默认是原文列出的 Opus 模型。 -->

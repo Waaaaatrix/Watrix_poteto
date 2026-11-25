@@ -19,6 +19,8 @@ Write pstack's model settings, one model per role:
 
 Enumerate the model slugs you can pass to a subagent in this session (Cursor `Task`, Claude Code `Agent`, OpenCode `task`, Codex `spawn_agent`). That is the dependable source. If your harness also has a command that lists the user's models, prefer it for completeness (for example `opencode models` or `pi --list-models`). If you cannot detect any, ask the user to paste the slugs they have access to. Never write a real slug you have not confirmed is available. The aliases `inherit-parent` and `auto` are always valid even though they are not detected slugs.
 
+Resolve the [GPT-6.2 code preset](../poteto-mode/skill.md#subagents) against the detected model ID and provider options. For this preset, the `large`, `medium`, and `small` budgets select `gpt-6.2-xhigh-fast`, `gpt-6.2-high-fast`, and `gpt-6.2-medium-fast` respectively. Validate the mapped values instead of looking for preset names in the native slug list.
+
 ### 2. Load current state
 
 The default role-to-model mapping is the rule shape shown in step 5 below. If the settings file already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults. A line whose role is not in step 5, such as `hardest tasks`, `architect runners`, `reflect tooling`, or `why investigators`, is from a retired role. Drop it.
@@ -62,10 +64,10 @@ alwaysApply: true
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit the subagent `model` and spawn a general-purpose subagent). Alias entries in a panel list still count toward its fan-out.
 # defaults: 3
 # budget: large (xhigh)
-feature, refactoring: claude-opus-5-5-xhigh-fast
-bug-fix: claude-opus-5-5-xhigh-fast
-perf-issue: claude-opus-5-5-xhigh-fast
-hillclimb: claude-opus-5-5-xhigh-fast
+feature, refactoring: gpt-6.2-xhigh-fast
+bug-fix: gpt-6.2-xhigh-fast
+perf-issue: gpt-6.2-xhigh-fast
+hillclimb: gpt-6.2-xhigh-fast
 judgment and prose: claude-opus-5-5-xhigh-fast
 arena runners: claude-fable-5-2-high, claude-opus-5-5-high-fast, gemini-4-neon-xhigh
 arena cross-judge pool: claude-opus-5-5-high-fast, gemini-4-neon-xhigh

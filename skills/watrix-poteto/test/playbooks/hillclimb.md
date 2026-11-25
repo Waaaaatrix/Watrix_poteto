@@ -37,8 +37,8 @@ Core discipline: one change, one measurement, keep or revert. Never stack untest
    <!-- 中文：只借用顺序，不借用那一步的停止规则。 -->
 5. Loop, one hypothesis per iteration:
    <!-- 中文：循环执行，每轮只验证一个假设： -->
-   - Hand the change to a subagent using your configured hillclimb model (default `claude-opus-5-5-xhigh-fast`) with a tight scope. Pick each subagent's reasoning level for the job, per the Subagents section. Supervise and review the diff rather than typing it (the **guard-the-context-window** principle skill). When several independent hypotheses are live, fan them to parallel subagents, each in its own worktree (the **separate-before-serializing-shared-state** principle skill).
-     <!-- 中文：用已配置的 hillclimb 模型把改动交给子 Agent，默认 claude-opus-5-5-xhigh-fast，明确限定范围。 -->
+   - Hand the change to a subagent using your configured hillclimb model (see the [code default](../../build/skills/poteto-mode/skill.md#subagents)) with a tight scope. Pick each subagent's reasoning level for the job, per the Subagents section. Supervise and review the diff rather than typing it (the **guard-the-context-window** principle skill). When several independent hypotheses are live, fan them to parallel subagents, each in its own worktree (the **separate-before-serializing-shared-state** principle skill).
+     <!-- 中文：用已配置的 hillclimb 模型把改动交给子 Agent，未配置时使用编程默认预设，明确限定范围。 -->
      <!-- 中文：按 Subagents 一节，为每个子 Agent 选适合任务的推理级别。 -->
      <!-- 中文：主 Agent 监督并评审 diff，不亲自敲实现，对应 guard-the-context-window 原则。 -->
      <!-- 中文：同时有多个互不依赖的假设时，分派给并行子 Agent，各用独立 worktree，对应 separate-before-serializing-shared-state 原则。 -->

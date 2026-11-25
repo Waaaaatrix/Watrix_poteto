@@ -88,9 +88,12 @@ Read the leaf skill in full for any principle you apply. Each entry names when i
 
 **Defaults for every `Task` call.** `run_in_background: true`, agent mode (readonly strips MCP), file pointers not inlined context, and an explicit model per role, Project workers included. `/setup-pstack` writes the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.claude/rules/pstack-models.md` in Claude Code, `~/.agents/pstack-models.md` in other harnesses), whose per-role lines override the defaults below and the role models in the routed skills (`arena`, `swarm`, `interrogate`). A role with no line keeps its default. A line of `inherit-parent` or `auto` runs the role on the parent model, so omit `model` and spawn a general-purpose subagent (`generalPurpose` in Cursor), because `poteto-agent` defaults to Opus 5.5. Each code playbook reads its own line (`feature, refactoring`, `bug-fix`, `perf-issue`, or `hillclimb`), prose and judgment read `judgment and prose`, and trivial mechanical edits read `swarm workers`. If the settings file has no `# defaults: 3` line, an older setup wrote it. Keep honoring its lines, and tell the user once per session to rerun `/setup-pstack`.
 
-- Code, prose, and judgment: `claude-opus-5-5-xhigh-fast`.
+- Code: `gpt-6.2-xhigh-fast`.
+- Prose and judgment: `claude-opus-5-5-xhigh-fast`.
 - Trivial mechanical edits: `claude-opus-5-5-high-fast`.
 - Diverse review and design panels: one runner each on `claude-fable-5-2-high`, `claude-opus-5-5-high-fast`, and `gemini-4-neon-xhigh`.
+
+**GPT-6.2 code preset.** On Codex, `gpt-6.2-xhigh-fast` maps to model `gpt-6.2-sol`, reasoning effort `xhigh`, and service tier `priority`. The `high` and `medium` variants change only the reasoning effort. Pass the model ID and options separately. On other harnesses, report the preset as unavailable and ask for a supported choice if that model and those options cannot be selected.
 
 **Fable 5.2 is an exception.** It runs outside a panel only when the user named it for this task or two Opus 5.5 xhigh runs of the same brief failed its check. Say which. Difficulty alone never qualifies.
 

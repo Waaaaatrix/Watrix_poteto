@@ -28,7 +28,7 @@ Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspender
    <!-- 中文：不要猜。 -->
    <!-- 中文：耗时或难以定位时，用 Cursor 的 /loop 持续调查。 -->
    <!-- 中文：启动第三步的 architect 或委派 interrogate 前，要先用运行证据确认剩下的机制。 -->
-3. Plan the fix. If it crosses a function boundary, `architect` first. Delegate implementation to a subagent using your configured bug-fix model (default `claude-opus-5-5-xhigh-fast`) with a specific scope.
+3. Plan the fix. If it crosses a function boundary, `architect` first. Delegate implementation to a subagent using your configured bug-fix model (see the [code default](../skills/poteto-mode/skill.md#subagents)) with a specific scope.
    <!-- 中文：规划修复。 -->
    <!-- 中文：如果跨函数边界，先运行 architect。 -->
    <!-- 中文：用配置的 bug-fix 模型委派实现，默认是原文列出的 Opus 模型，并给出明确范围。 -->
